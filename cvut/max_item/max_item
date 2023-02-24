@@ -1,0 +1,3 @@
+#!/bin/bash
+
+echo $(ls | grep -E 'file_item_\d*$')
