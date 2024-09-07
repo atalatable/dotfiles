@@ -1,0 +1,18 @@
+import = [
+    "~/.config/alacritty/themes/themes/nord.toml"
+]
+
+[scrolling]
+history = 10000
+
+[selection]
+save_to_clipboard = true
+
+[font]
+normal = {family = "JetBrainsMono Nerd Font", style = "Regular"}
+
+[keyboard]
+bindings = [
+  {key = "V", mods = "Control", action = "Paste"},
+  {key = "F11", action = "ToggleFullscreen"}
+]

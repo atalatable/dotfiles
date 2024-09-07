@@ -19,10 +19,10 @@ font pango:monospace 8
 # text rendering and scalability on retina/hidpi displays (thanks to pango).
 #font pango:DejaVu Sans Mono 8
 
-smart_gaps on
+# smart_gaps on
 
 gaps inner 5
-gaps outer 2
+gaps outer 8
 
 for_window [class=".*"] border pixel none
 for_window [class=".*" window_type="dialog"] border pixel none
@@ -35,10 +35,9 @@ new_float pixel 1
 # https://wiki.archlinux.org/index.php/XDG_Autostart
 exec --no-startup-id dex --autostart --environment i3
 
-# Custom config
-exec --no-startup-id ~/.config/i3/touchpad.sh
-exec_always --no-startup-id ~/.config/i3/bar.sh &
-exec --no-startup-id feh --bg-scale /home/atalata/Images/background.png
+# Custom configure
+exec_always --no-startup-id ~/.config/utils/bar.sh &
+exec --no-startup-id feh --bg-fill /home/atalata/Images/background-i3.jpg
 
 
 # The combination of xss-lock, nm-applet and pactl is a popular choice, so
@@ -54,11 +53,12 @@ exec --no-startup-id nm-applet
 
 # Use pactl to adjust volume in PulseAudio.
 set $refresh_i3status killall -SIGUSR1 i3status
-bindsym XF86AudioRaiseVolume exec --no-startup-id pamixer -i 5
-bindsym XF86AudioLowerVolume exec --no-startup-id pamixer -d 5
-bindsym Shift+XF86AudioRaiseVolume exec --no-startup-id pamixer -i 1
-bindsym Shift+XF86AudioLowerVolume exec --no-startup-id pamixer -d 1
-bindsym XF86AudioMute exec --no-startup-id pamixer -t
+bindsym XF86AudioRaiseVolume exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ +5%
+bindsym XF86AudioLowerVolume  exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ -5%
+bindsym Shift+XF86AudioRaiseVolume exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ +1%
+bindsym Shift+XF86AudioLowerVolume  exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ -1%
+
+bindsym XF86AudioMute exec --no-startup-id pactl set-sink-mute @DEFAULT_SINK@ toggle
 bindsym XF86AudioMicMute exec --no-startup-id pactl set-source-mute @DEFAULT_SOURCE@ toggle && $refresh_i3status
 
 bindsym $mod+Shift+s exec --no-startup-id flameshot gui
@@ -71,8 +71,8 @@ floating_modifier $mod
 tiling_drag modifier titlebar
 
 # start a terminal
-bindsym $mod+Return exec i3-sensible-terminal
-bindsym $mod+b exec brave-browser
+bindsym $mod+Return exec alacritty
+bindsym $mod+b exec firefox
 
 bindsym $mod+z exec "i3lock -c 282A2E"
 
@@ -196,6 +196,7 @@ bindsym $mod+Shift+c reload
 bindsym $mod+Shift+r restart
 # exit i3 (logs you out of your X session)
 bindsym $mod+Shift+e exec "i3-nagbar -t warning -m 'You pressed the exit shortcut. Do you really want to exit i3? This will end your X session.' -B 'Yes, exit i3' 'i3-msg exit'"
+bindsym $mod+Shift+w exec "i3-msg exit"
 bindsym $mod+Shift+x exec systemctl poweroff
 # bindsym $mod+Shift+l exec i3-msg exit
 
@@ -225,7 +226,5 @@ mode "resize" {
 }
 
 bindsym $mod+r mode "resize"
-
-exec --no-startup-id ~/.config/i3/kb.sh
 # Start i3bar to display a workspace bar (plus the system information i3status
 # finds out, if available)
