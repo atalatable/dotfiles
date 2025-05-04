@@ -110,4 +110,6 @@ alias ip="ip -c"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 
 # Created by `pipx` on 2024-09-06 13:41:19
-export PATH="$PATH:/home/atalata/.local/bin"
+export PATH="$PATH:/home/atalata/.local/bin:/home/atalata/.npm-global/bin"
+
+source <(fzf --zsh)
